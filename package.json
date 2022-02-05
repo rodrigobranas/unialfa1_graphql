@@ -1,0 +1,20 @@
+{
+  "name": "graphql_",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+	  "test": "jest ./test",
+	  "coverage": "jest ./test --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.6.2",
+    "axios": "^0.25.0",
+    "graphql": "^16.3.0",
+    "jest": "^27.5.0",
+    "nodemon": "^2.0.15"
+  }
+}
