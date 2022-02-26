@@ -53,6 +53,7 @@ const typeDefs = `
 	type Mutation {
 		saveBook1 (title: String!, price: Float!, category: String!): Book
 		saveBook2 (book: BookInput): Book
+		deleteBook (idBook: ID): Book
 	}
 `;
 
@@ -60,7 +61,8 @@ const resolvers = {
 	Query: {
 		books(parent, args) {
 			if (args.title) {
-				return bookService.getBooksByTitle(args.title);
+				const books = bookService.getBooksByTitle(args.title);
+				return books;
 			}
 			return bookService.getBooks();
 		},
@@ -86,8 +88,10 @@ const resolvers = {
 		},
 		saveBook2(parent, args) {
 			const book = args.book;
-			console.log(book);
 			return bookService.saveBook(book);
+		},
+		deleteBook(parent, args) {
+			return bookService.deleteBook(args.idBook);
 		}
 	}
 };

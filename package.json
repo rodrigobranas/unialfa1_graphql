@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-	  "test": "jest ./test",
-	  "coverage": "jest ./test --coverage"
+    "test": "jest ./test",
+	"test-watch": "jest ./test --watch-all",
+    "coverage": "jest ./test --coverage"
   },
   "keywords": [],
   "author": "",

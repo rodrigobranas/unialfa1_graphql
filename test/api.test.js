@@ -104,6 +104,7 @@ test("Deve testar uma busca de autor pelo nome", async function () {
 });
 
 test("Deve testar uma mutação para inserir um livro 1", async function () {
+	const title = "Microservices Patterns";
 	const response = await axios({
 		url: "http://localhost:3000",
 		method: "post",
@@ -113,7 +114,7 @@ test("Deve testar uma mutação para inserir um livro 1", async function () {
 		data: {
 			query: `
 				mutation {
-					saveBook1 (title: "Microservices Patterns", price: 89.90, category: "TECHNOLOGY") {
+					saveBook1 (title: "${title}", price: 89.90, category: "TECHNOLOGY") {
 						idBook
 						title
 						price
@@ -124,7 +125,7 @@ test("Deve testar uma mutação para inserir um livro 1", async function () {
 		}
 	});
 	const query = response.data;
-	const saveBook = query.data.saveBook;
+	const saveBook = query.data.saveBook1;
 	const response2 = await axios({
 		url: "http://localhost:3000",
 		method: "post",
@@ -145,9 +146,31 @@ test("Deve testar uma mutação para inserir um livro 1", async function () {
 	const books = query2.data.books;
 	const [book1, book2, book3, book4] = books;
 	expect(book4.title).toBe("Microservices Patterns");
+	await axios({
+		url: "http://localhost:3000",
+		method: "post",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		data: {
+			query: `
+				mutation ($idBook: ID) {
+					deleteBook (idBook: $idBook) {
+						idBook
+						title
+						price
+						category
+					}
+				}
+			`,
+			variables: {
+				idBook: saveBook.idBook
+			}
+		}
+	});
 });
 
-test.only("Deve testar uma mutação para inserir um livro 2", async function () {
+test("Deve testar uma mutação para inserir um livro 2", async function () {
 	const response = await axios({
 		url: "http://localhost:3000",
 		method: "post",
@@ -180,7 +203,7 @@ test.only("Deve testar uma mutação para inserir um livro 2", async function ()
 		}
 	});
 	const query = response.data;
-	const saveBook = query.data.saveBook;
+	const saveBook = query.data.saveBook2;
 	const response2 = await axios({
 		url: "http://localhost:3000",
 		method: "post",
@@ -206,6 +229,280 @@ test.only("Deve testar uma mutação para inserir um livro 2", async function ()
 	const query2 = response2.data;
 	const books = query2.data.books;
 	const [book1, book2, book3, book4] = books;
-	console.log(book4);
 	expect(book4.title).toBe("Microservices Patterns");
+	await axios({
+		url: "http://localhost:3000",
+		method: "post",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		data: {
+			query: `
+				mutation ($idBook: ID) {
+					deleteBook (idBook: $idBook) {
+						idBook
+						title
+						price
+						category
+					}
+				}
+			`,
+			variables: {
+				idBook: saveBook.idBook
+			}
+		}
+	});
+});
+
+test("Deve testar uma mutação para inserir um livro com variables", async function () {
+	const response = await axios({
+		url: "http://localhost:3000",
+		method: "post",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		data: {
+			query: `
+				mutation ($book: BookInput) {
+					saveBook2 (book: $book) {
+						idBook
+						title
+						price
+						category
+					}
+				}
+			`,
+			variables: {
+				book: {
+					title: "Microservices Patterns", 
+					price: 89.90, 
+					category: "TECHNOLOGY",
+					authors: [
+						{
+							name: "Cris Richardson"
+						}
+					],
+					publisher: {
+						name: "Addison-Wesley"
+					}
+				}
+			}
+		}
+	});
+	const query = response.data;
+	const saveBook = query.data.saveBook2;
+	const response2 = await axios({
+		url: "http://localhost:3000",
+		method: "post",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		data: {
+			query: `
+				{
+					books {
+						title
+						authors {
+							name
+						}
+						publisher {
+							name
+						}
+					}
+				}
+			`
+		}
+	});
+	const query2 = response2.data;
+	const books = query2.data.books;
+	const [book1, book2, book3, book4] = books;
+	expect(book4.title).toBe("Microservices Patterns");
+	await axios({
+		url: "http://localhost:3000",
+		method: "post",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		data: {
+			query: `
+				mutation ($idBook: ID) {
+					deleteBook (idBook: $idBook) {
+						idBook
+						title
+						price
+						category
+					}
+				}
+			`,
+			variables: {
+				idBook: saveBook.idBook
+			}
+		}
+	});
+});
+
+test("Deve testar uma busca de livro pelo title com variables", async function () {
+	const response = await axios({
+		url: "http://localhost:3000",
+		method: "post",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		data: {
+			query: `
+				query ($title: String) {
+					books (title: $title) {
+						title
+					}
+				}
+			`,
+			variables: {
+				title: "Clean Code"
+			}
+		}
+	});
+	const query = response.data;
+	const books = query.data.books;
+	expect(books).toHaveLength(1);
+	const [book1] = books;
+	expect(book1.title).toBe("Clean Code");
+});
+
+test("Deve testar uma busca de livro pelo title com aliases", async function () {
+	const response = await axios({
+		url: "http://localhost:3000",
+		method: "post",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		data: {
+			query: `
+				query ($title: String) {
+					livros: books (title: $title) {
+						titulo: title
+					}
+				}
+			`,
+			variables: {
+				title: "Clean Code"
+			}
+		}
+	});
+	const query = response.data;
+	const books = query.data.livros;
+	expect(books).toHaveLength(1);
+	const [book1] = books;
+	expect(book1.titulo).toBe("Clean Code");
+});
+
+test("Deve testar uma busca de livro pelo title com directives 2", async function () {
+	const response = await axios({
+		url: "http://localhost:3000",
+		method: "post",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		data: {
+			query: `
+				query ($title: String, $hasAuthors: Boolean!) {
+					books (title: $title) {
+						title
+						authors @include (if: $hasAuthors) {
+							name
+						}
+					}
+				}
+			`,
+			variables: {
+				title: "Clean Code",
+				hasAuthors: false
+			}
+		}
+	});
+	const query = response.data;
+	const books = query.data.books;
+	const [book1] = books;
+	expect(book1.authors).toBeUndefined();
+});
+
+test("Deve testar uma mutação para deletar um livro", async function () {
+	const response = await axios({
+		url: "http://localhost:3000",
+		method: "post",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		data: {
+			query: `
+				mutation ($book: BookInput) {
+					saveBook: saveBook2 (book: $book) {
+						idBook
+						title
+						price
+						category
+					}
+				}
+			`,
+			variables: {
+				book: {
+					title: "Microservices Patterns", 
+					price: 89.90, 
+					category: "TECHNOLOGY",
+					authors: [
+						{
+							name: "Cris Richardson"
+						}
+					],
+					publisher: {
+						name: "Addison-Wesley"
+					}
+				}
+			}
+		}
+	});
+	const query = response.data;
+	const saveBook = query.data.saveBook;
+	// apagar
+	const response2 = await axios({
+		url: "http://localhost:3000",
+		method: "post",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		data: {
+			query: `
+				mutation ($idBook: ID) {
+					deleteBook (idBook: $idBook) {
+						idBook
+						title
+						price
+						category
+					}
+				}
+			`,
+			variables: {
+				idBook: saveBook.idBook
+			}
+		}
+	});
+	// consultar
+	const response3 = await axios({
+		url: "http://localhost:3000",
+		method: "post",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		data: {
+			query: `
+				{
+					books (title: "Microservices Patterns") {
+						title
+					}
+				}
+			`
+		}
+	});
+	const query3 = response3.data;
+	const books = query3.data.books;
+	expect(books).toHaveLength(0);
 });

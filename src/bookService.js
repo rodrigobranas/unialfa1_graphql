@@ -123,19 +123,30 @@ exports.getPublisher = function (idPublisher) {
 }
 
 exports.saveBook = function (book) {
-	const publisher = book.publisher;
-	publisher.idPublisher = publishers.length + 1;
-	publishers.push(publisher);
 	book.idBook = books.length + 1;
-	book.idPublisher = publisher.idPublisher;
-	books.push(book);
-	for (const author of book.authors) {
-		author.idAuthor = authors.length + 1;
-		authors.push(author);
-		bookAuthors.push({
-			idBook: book.idBook,
-			idAuthor: author.idAuthor
-		});
+	if (book.publisher) {
+		const publisher = book.publisher;
+		publisher.idPublisher = publishers.length + 1;
+		publishers.push(publisher);
+		book.idPublisher = publisher.idPublisher;
 	}
+	if (book.authors) {
+		for (const author of book.authors) {
+			author.idAuthor = authors.length + 1;
+			authors.push(author);
+			bookAuthors.push({
+				idBook: book.idBook,
+				idAuthor: author.idAuthor
+			});
+		}
+	}
+	books.push(book);
+	return book;
+}
+
+exports.deleteBook = function (idBook) {
+	const book = books.find(book => book.idBook === idBook);
+	const position = books.indexOf(book);
+	books.splice(position, 1);
 	return book;
 }
