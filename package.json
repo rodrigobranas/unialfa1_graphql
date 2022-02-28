@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest ./test",
-	"test-watch": "jest ./test --watch-all",
+    "test": "jest ./test --force-exit",
+    "test-watch": "jest ./test --watch-all",
     "coverage": "jest ./test --coverage"
   },
   "keywords": [],
@@ -16,6 +16,7 @@
     "axios": "^0.25.0",
     "graphql": "^16.3.0",
     "jest": "^27.5.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "pg-promise": "^10.11.1"
   }
 }

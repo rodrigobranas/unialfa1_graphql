@@ -1,0 +1,39 @@
+FIRST
+
+Fast: Os testes devem executar rápido (o que é rápido: suficiente para você não deixar de executar por achar lento)
+
+Independent: Um teste não deve ser responsável por criar dados utilizados por outro teste, eles devem ser totalmente independentes
+
+Repeatable: Repetindo o teste várias vezes o resultado é sempre o mesmo
+
+Self-validating: O teste deve ser capaz de verificar o resultado retornando sucesso ou falha
+
+Timely: O teste deve ser escrito antes do código-fonte
+
+Given/Arrange
+When/Act
+Then/Assert
+
+3 leis do TDD
+
+Robert C. Martin (Clean Code, Clean Architecture, Clean Craftsmanship)
+
+1 - Você não deve escrever uma linha de código antes de ter um teste que falha
+2 - Você não deve escrever mais testes do que o necessário para detectar uma falha
+3 - Você deve escrever apenas o suficiente para fazer o teste passar
+
+Tipos de teste
+
+E2E
+Integração
+Unidade
+
+Devemos ter mais testes de unidade porque mais rápido, mais simples e mais focado em uma unidade
+Não devemos ter apenas testes de unidade porque eles não são abrangentes
+
+Aliases
+Variables
+Directives
+Interfaces
+Union
+Fragment

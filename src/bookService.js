@@ -4,21 +4,24 @@ const books = [
 		idPublisher: "1",
 		title: "Clean Code",
 		category: "TECHNOLOGY",
-		price: 59.90
+		price: 59.90,
+		pages: 380
 	},
 	{
 		idBook: "2", 
 		idPublisher: "1",
 		title: "Patterns of Enterprise Application Architecture",
 		category: "TECHNOLOGY",
-		price: 89.90
+		price: 89.90,
+		pages: 500
 	},
 	{
 		idBook: "3", 
 		idPublisher: "2",
 		title: "Design Patterns",
 		category: "TECHNOLOGY",
-		price: 99.90
+		price: 99.90,
+		pages: 420
 	}
 ];
 
