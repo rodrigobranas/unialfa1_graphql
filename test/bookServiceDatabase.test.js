@@ -3,7 +3,7 @@ const bookServices = require("../src/bookServiceDatabase");
 describe("Book Service Database", function () {
 	test("Deve retornar uma lista de livros", async function () {
 		const books = await bookServices.getBooks();
-		expect(books).toHaveLength(3);
+		expect(books).toHaveLength(6);
 	});
 	
 	test("Deve retornar uma lista de autores", async function () {

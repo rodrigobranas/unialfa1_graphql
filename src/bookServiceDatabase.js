@@ -10,7 +10,16 @@ exports.getBooks = async function () {
 }
 
 exports.getBooksByTitle = async function (title) {
-	const books = await connection.query("select * from unialfa.book where title = $1", [title]);
+	const books = await connection.query("select * from unialfa.book where title like $1", [`%${title}%`]);
+	for (const book of books) {
+		book.idBook = `${book.id_book}`;
+		book.idPublisher = `${book.id_publisher}`;
+	}
+	return books;
+}
+
+exports.getBooksWithPagination = async function (limit, offset) {
+	const books = await connection.query("select * from unialfa.book limit $1 offset $2", [limit, offset]);
 	for (const book of books) {
 		book.idBook = `${book.id_book}`;
 		book.idPublisher = `${book.id_publisher}`;

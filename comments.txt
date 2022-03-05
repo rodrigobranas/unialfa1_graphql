@@ -37,3 +37,11 @@ Directives
 Interfaces
 Union
 Fragment
+
+SOLID Principles
+
+SRP: Single Responsibility
+OCP: Open/Closed
+LSP: Liskov Substitution
+ISP: Interface Segregation
+DIP: Dependency Inversion: High level modules must not depend on low level modules

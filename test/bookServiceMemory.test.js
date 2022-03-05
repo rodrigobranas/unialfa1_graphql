@@ -1,4 +1,4 @@
-const bookServices = require("../src/bookService");
+const bookServices = require("../src/bookServiceMemory");
 
 describe("Book Service", function () {
 	test("Deve retornar uma lista de livros", function () {

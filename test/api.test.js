@@ -146,8 +146,8 @@ describe("API Test", function () {
 		});
 		const query2 = response2.data;
 		const books = query2.data.books;
-		const [book1, book2, book3, book4] = books;
-		expect(book4.title).toBe("Microservices Patterns");
+		const [book1, book2, book3, book4, book5, book6, book7] = books;
+		expect(book7.title).toBe("Microservices Patterns");
 		await axios({
 			url: "http://localhost:3000",
 			method: "post",
@@ -230,8 +230,8 @@ describe("API Test", function () {
 		});
 		const query2 = response2.data;
 		const books = query2.data.books;
-		const [book1, book2, book3, book4] = books;
-		expect(book4.title).toBe("Microservices Patterns");
+		const [book1, book2, book3, book4, book5, book6, book7] = books;
+		expect(book7.title).toBe("Microservices Patterns");
 		await axios({
 			url: "http://localhost:3000",
 			method: "post",
@@ -317,8 +317,8 @@ describe("API Test", function () {
 		});
 		const query2 = response2.data;
 		const books = query2.data.books;
-		const [book1, book2, book3, book4] = books;
-		expect(book4.title).toBe("Microservices Patterns");
+		const [book1, book2, book3, book4, book5, book6, book7] = books;
+		expect(book7.title).toBe("Microservices Patterns");
 		await axios({
 			url: "http://localhost:3000",
 			method: "post",
@@ -582,7 +582,7 @@ describe("API Test", function () {
 		});
 		const query = response.data;
 		const contents = query.data.contents;
-		expect(contents).toHaveLength(4);
+		expect(contents).toHaveLength(7);
 	});
 	
 	test("Deve testar uma consulta de books e videos", async function () {
@@ -607,7 +607,7 @@ describe("API Test", function () {
 		});
 		const query = response.data;
 		const contents = [...query.data.books, ...query.data.videos];
-		expect(contents).toHaveLength(4);
+		expect(contents).toHaveLength(7);
 	});
 	
 	test("Deve testar uma consulta de books formatando o preço", async function () {

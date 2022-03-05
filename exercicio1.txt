@@ -1,6 +1,0 @@
-Exercício
-
-1 - Propor um modelo de dados com no mínimo 3 tipos
-2 - Criar uma API GraphQL utilizando sua linguagem preferida
-3 - Criar pelo menos uma query e uma mutation
-4 - Criar testes automatizados
